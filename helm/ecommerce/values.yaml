@@ -1,0 +1,7 @@
+replicaCount: 2
+image:
+  repository: harishachowdary/ai-ecommerce-app
+  tag: v1
+service:
+  port: 80
+  targetPort: 3000

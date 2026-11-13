@@ -1,0 +1,10 @@
+---
+- name: Configure DevOps Runtime Environment
+  hosts: devops_servers
+  become: yes
+  tasks:
+    - name: Ensure essential packages are installed
+      apt:
+        name: [curl, git, jq]
+        state: present
+        update_cache: yes

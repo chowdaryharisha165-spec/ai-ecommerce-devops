@@ -1,0 +1,23 @@
+pipeline {
+  agent any
+  stages {
+    stage("Checkout") {
+      steps { checkout scm }
+    }
+    stage("Static Security Linting") {
+      steps {
+        sh "docker run --rm -i hadolint/hadolint < docker/Dockerfile"
+      }
+    }
+    stage("Build & Scan Docker Image") {
+      steps {
+        sh "docker build -t harishachowdary/ai-ecommerce-app:${BUILD_NUMBER} -f docker/Dockerfile ."
+      }
+    }
+    stage("Deploy & Health Check") {
+      steps {
+        sh "./scripts/deploy.sh && sleep 5 && ./scripts/health-check.sh"
+      }
+    }
+  }
+}
